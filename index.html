@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Gestor de Tareas</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#007bff">
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('service-worker.js');
+    }
+  </script>
+</head>
+<body>
+  <div id="login-container">
+    <h2>Acceso</h2>
+    <input type="password" id="password" placeholder="Introduce la contraseña">
+    <button onclick="checkPassword()">Entrar</button>
+  </div>
+
+  <div id="app-container" style="display:none;">
+    <h2>Gestor de Tareas</h2>
+    <form id="task-form">
+      <input type="text" id="title" placeholder="Tarea" required>
+      <input type="text" id="category" placeholder="Categoría" required>
+      <input type="text" id="person" placeholder="Asignada a" required>
+      <button type="submit">Añadir</button>
+    </form>
+
+    <button onclick="exportToExcel()">Exportar a Excel</button>
+
+    <h3>Lista de Tareas</h3>
+    <ul id="task-list"></ul>
+  </div>
+
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
