@@ -15,23 +15,97 @@
 <body>
   <div id="login-container">
     <h2>Acceso</h2>
-    <input type="password" id="password" placeholder="Introduce la contraseña">
+    <input type="password" id="password" placeholder="Introduce la contraseña" autocomplete="current-password">
     <button onclick="checkPassword()">Entrar</button>
   </div>
 
   <div id="app-container" style="display:none;">
-    <h2>Gestor de Tareas</h2>
-    <form id="task-form">
-      <input type="text" id="title" placeholder="Tarea" required>
-      <input type="text" id="category" placeholder="Categoría" required>
-      <input type="text" id="person" placeholder="Asignada a" required>
-      <button type="submit">Añadir</button>
-    </form>
-
-    <button onclick="exportToExcel()">Exportar a Excel</button>
-
-    <h3>Lista de Tareas</h3>
-    <ul id="task-list"></ul>
+    <h2 class="app-title">Gestor de tareas</h2>
+    <div id="main-layout">
+      <div id="left-panel">
+        <button id="show-add-task" type="button" class="btn-add-main"><span>➕</span> Añadir tarea</button>
+        <form id="task-form" style="display:none;flex-direction:column;gap:6px;">
+          <label for="title">Tarea*</label>
+          <input type="text" id="title" required placeholder="Descripción de la tarea">
+          <label for="category">Categoría*</label>
+          <select id="category" required>
+            <option value="">Selecciona una categoría</option>
+            <option value="Música">Música</option>
+            <option value="Traje">Traje</option>
+            <option value="Estandarte">Estandarte</option>
+            <option value="Espectáculo">Espectáculo</option>
+            <option value="Carro">Carro</option>
+          </select>
+          <label id="label-subcategory" for="subcategory" style="display:none;">Subcategoría*</label>
+          <select id="subcategory" style="display:none;"></select>
+          <label for="person">Persona*</label>
+          <input type="text" id="person" required placeholder="Responsable">
+          <label for="deadline">Fecha límite*</label>
+          <input type="date" id="deadline" required>
+          <label for="status">Estado*</label>
+          <select id="status" required>
+            <option value="Pendiente">Pendiente</option>
+            <option value="Hecho">Hecho</option>
+          </select>
+          <div class="form-actions">
+            <button type="submit" class="btn-add">Guardar</button>
+            <button type="button" id="cancel-task" class="btn-cancel secondary">Cancelar</button>
+          </div>
+        </form>
+        <button onclick="exportToExcel()" class="export-btn"><span>📤</span> Exportar a Excel</button>
+      </div>
+      <div id="right-panel">
+        <h3 class="list-title">Lista de tareas</h3>
+        <div style="overflow-x:auto;">
+          <table id="task-table">
+            <thead>
+              <tr>
+                <th style="min-width:120px">
+                  Tarea<br>
+                  <input type="text" id="filter-title" placeholder="Filtrar" style="width:90%;font-size:0.95em;">
+                </th>
+                <th style="min-width:100px">
+                  Categoría<br>
+                  <select id="filter-category" style="width:95%;font-size:0.95em;">
+                    <option value="">Todas</option>
+                    <option value="Música">Música</option>
+                    <option value="Traje">Traje</option>
+                    <option value="Estandarte">Estandarte</option>
+                    <option value="Espectáculo">Espectáculo</option>
+                    <option value="Carro">Carro</option>
+                  </select>
+                </th>
+                <th style="min-width:110px">
+                  Subcategoría<br>
+                  <input type="text" id="filter-subcategory" placeholder="Filtrar" style="width:90%;font-size:0.95em;">
+                </th>
+                <th style="min-width:120px">
+                  Persona<br>
+                  <input type="text" id="filter-person" placeholder="Filtrar" style="width:90%;font-size:0.95em;">
+                </th>
+                <th style="min-width:110px">
+                  Fecha límite<br>
+                  <input type="date" id="filter-deadline" style="width:95%;font-size:0.95em;">
+                </th>
+                <th style="min-width:90px">
+                  Estado<br>
+                  <select id="filter-status" style="width:95%;font-size:0.95em;">
+                    <option value="">Todos</option>
+                    <option value="Pendiente">Pendiente</option>
+                    <option value="Hecho">Hecho</option>
+                  </select>
+                </th>
+                <th style="min-width:110px">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="task-list"></tbody>
+          </table>
+        </div>
+        <div style="display:flex;justify-content:flex-end;margin:18px 0 0 0;">
+          <!-- Elimino el botón de añadir tarea aquí, solo debe estar en el panel izquierdo -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
